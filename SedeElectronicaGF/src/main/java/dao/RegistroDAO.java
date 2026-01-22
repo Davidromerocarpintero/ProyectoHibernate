@@ -17,4 +17,9 @@ public class RegistroDAO {
 			tr.commit();
 		}
 	}
+
+	public Registro buscarPorNumero(String trim) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

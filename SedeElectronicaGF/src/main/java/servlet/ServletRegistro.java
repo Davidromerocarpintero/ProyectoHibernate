@@ -1,8 +1,9 @@
-package com.sede.servlet;
+package servlet;
 
-import java.dao.EntidadDAO;
-import java.dao.RegistrosDAO;
-
+import dao.EntidadesDAO;
+import dao.RegistroDAO;
+import entities.Entidades;
+import entities.Registro;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,14 +18,14 @@ public class ServletRegistro extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private EntidadDAO entidadDAO;
-    private RegistrosDAO registrosDAO;
+    private EntidadesDAO entidadDAO;
+    private RegistroDAO registrosDAO;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        entidadDAO = new EntidadDAO();
-        registrosDAO = new RegistrosDAO();
+        entidadDAO = new EntidadesDAO();
+        registrosDAO = new RegistroDAO();
         System.out.println("ServletRegistro inicializado");
     }
 
@@ -98,7 +99,7 @@ public class ServletRegistro extends HttpServlet {
                 return;
             }
 
-            Entidad entidad = entidadDAO.obtenerPorId(idEntidad);
+            Entidades entidad = EntidadesDAO.obtenerPorId(idEntidad);
             if (entidad == null) {
                 request.setAttribute("exito", false);
                 request.setAttribute("mensaje", "Entidad no encontrada");
@@ -106,7 +107,7 @@ public class ServletRegistro extends HttpServlet {
                 return;
             }
 
-            Registros registro = new Registros();
+            Registro registro = new Registro();
             registro.setDniSolicitante(dni.trim().toUpperCase());
             registro.setNombreSolicitante(nombre.trim());
             registro.setApellidosSolicitante(apellidos.trim());
@@ -137,7 +138,7 @@ public class ServletRegistro extends HttpServlet {
                 return;
             }
 
-            Registros registro = registrosDAO.buscarPorNumero(numRegistro.trim());
+            Registro registro = registrosDAO.buscarPorNumero(numRegistro.trim());
 
             if (registro != null) {
                 request.setAttribute("encontrado", true);

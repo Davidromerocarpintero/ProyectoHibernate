@@ -14,4 +14,9 @@ public class EntidadesDAO {
 			tr.commit();
 		}
 	}
+
+	public static Entidades obtenerPorId(int idEntidad) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

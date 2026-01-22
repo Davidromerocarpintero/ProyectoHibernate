@@ -70,8 +70,8 @@ public class Registro implements java.io.Serializable {
 		return this.entidad;
 	}
 
-	public void setEntidad(String entidad) {
-		this.entidad = entidad;
+	public void setEntidad(String entidad2) {
+		this.entidad = entidad2;
 	}
 
 }
