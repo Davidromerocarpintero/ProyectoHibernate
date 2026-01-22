@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.sede.dao.EntidadDAO"%>
-<%@ page import="com.sede.model.Entidad"%>
+<%@ page import="dao.EntidadesDAO"%>
+<%@ page import="entities.Entidades"%>
 <%@ page import="java.util.List"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -148,7 +148,7 @@
                 <option value="">Seleccione una opción</option>
                 <%
                     try {
-                        EntidadDAO dao = new EntidadDAO();
+                        EntidadesDAO dao = new EntidadesDAO();
                         List<Entidad> lista = dao.listarEntidades();
 
                         for (Entidad e : lista) {
