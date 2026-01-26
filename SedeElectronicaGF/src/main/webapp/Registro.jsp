@@ -146,27 +146,27 @@
             <label for="idEntidad">Entidad responsable <span class="obligatorio">*</span></label>
             <select id="idEntidad" name="idEntidad" required>
                 <option value="">Seleccione una opción</option>
-                <%
+                <%/*
                     try {
                         EntidadesDAO dao = new EntidadesDAO();
-                        List<Entidad> lista = dao.listarEntidades();
+                        List<Entidades> lista = dao.getALL();
 
-                        for (Entidad e : lista) {
+                        for (Entidades e : lista) {
                 %>
-                    <option value="<%= e.getIdEntidad() %>">
-                        <%= e.getNombreEntidad() %>
+                    <option value="<%= e.getNombre() %>">
+                        <%= e.getNombre() %>
                     </option>
                 <%
                         }
                     } catch (Exception ex) {
                         out.println("<option>Error al cargar entidades</option>");
                     }
-                %>
+                */%>
             </select>
         </div>
 
         <div class="acciones">
-            <button type="submit">Guardar trámite</button>
+            <button type="submit" name="boton" value="guardarRegistro">Guardar trámite</button>
         </div>
     </form>
 </div>
