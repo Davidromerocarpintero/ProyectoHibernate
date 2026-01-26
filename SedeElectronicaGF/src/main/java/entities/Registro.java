@@ -6,7 +6,7 @@ package entities;
  */
 public class Registro implements java.io.Serializable {
 
-	private int idRegistro;
+	private String idRegistro;
 	private String dniSolicitante;
 	private String nombreSolicitante;
 	private String apellidosSolicitante;
@@ -16,7 +16,7 @@ public class Registro implements java.io.Serializable {
 	public Registro() {
 	}
 
-	public Registro(int idRegistro, String dniSolicitante, String nombreSolicitante, String apellidosSolicitante,
+	public Registro(String idRegistro, String dniSolicitante, String nombreSolicitante, String apellidosSolicitante,
 			String tramite, String entidad) {
 		this.idRegistro = idRegistro;
 		this.dniSolicitante = dniSolicitante;
@@ -26,12 +26,12 @@ public class Registro implements java.io.Serializable {
 		this.entidad = entidad;
 	}
 
-	public int getIdRegistro() {
+	public String getIdRegistro() {
 		return this.idRegistro;
 	}
 
-	public void setIdRegistro(int idRegistro) {
-		this.idRegistro = idRegistro;
+	public void setIdRegistro(String numRegistro) {
+		this.idRegistro = numRegistro;
 	}
 
 	public String getDniSolicitante() {

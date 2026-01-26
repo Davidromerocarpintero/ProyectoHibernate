@@ -46,4 +46,18 @@ public class RegistroDAO {
 
 
 	}
+
+
+	public long obtenerContador() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public String guardarRegistro(Registro registro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

@@ -66,9 +66,10 @@ public class RegistrosLn {
         System.out.println("Validación exitosa");
         return true;
     }
+    
 
     public String generarNumeroRegistro() {
-        long contador = registrosDAO.obtenerContador();
+        long contador = registroDAO.obtenerContador();
         contador++;
 
         String numRegistro = String.format("REG_%06d", contador);
@@ -77,11 +78,11 @@ public class RegistrosLn {
         return numRegistro;
     }
 
-    public String procesarRegistro(Registros registro) {
+    public String procesarRegistro(Registro registro) {
         String numRegistro = generarNumeroRegistro();
-        registro.setNumRegistro(numRegistro);
+        registro.setIdRegistro(numRegistro);
 
-        String resultado = registrosDAO.guardarRegistro(registro);
+        String resultado = registroDAO.guardarRegistro(registro);
 
         System.out.println("Registro procesado: " + resultado);
         return resultado;
