@@ -1,10 +1,9 @@
 package dao;
 
-<<<<<<< HEAD
-=======
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
->>>>>>> origin/david
+
 import entities.Registro;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +12,6 @@ import org.hibernate.query.Query;
 
 public class RegistroDAO {
 
-<<<<<<< HEAD
     public String insertar(Registro registro) {
         Transaction tx = null;
         String codigoGenerado;
@@ -88,10 +86,10 @@ public class RegistroDAO {
 
         return total;
     }
-=======
+
 	public static void insert(Registro r) throws Exception {
 		Transaction tr = null;
-		try (Session sesion = HibernateUtils.getSessionFactory().openSession();) {
+		try (Session sesion = HibernateUtiles.getSessionFactory().openSession();) {
 			tr = sesion.beginTransaction();
 			sesion.persist(r);
 			tr.commit();
@@ -109,7 +107,7 @@ public class RegistroDAO {
 
 		Transaction tr = null;
 		Registro rgto=null;
-		try (Session sesion = HibernateUtils.getSessionFactory().openSession();) {
+		try (Session sesion = HibernateUtiles.getSessionFactory().openSession();) {
 			tr = sesion.beginTransaction();
 			//Get permite recuperar el registro de inmediato y recoge null si no existe 
 			rgto=sesion.get(Registro.class,r.getIdRegistro());
@@ -125,8 +123,7 @@ public class RegistroDAO {
 		} finally {
 			return rgto;
 		}
-
-
 	}
->>>>>>> origin/david
 }
+
+	
