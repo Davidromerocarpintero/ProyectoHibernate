@@ -111,6 +111,10 @@
     <div class="botones">
         <a href="<%= request.getContextPath() %>/Registro.jsp">Nuevo registro</a>
         <a href="<%= request.getContextPath() %>/Buscar.jsp">Consultar</a>
+        <form action='ServletHibernate' method="get">
+        <input type="submit" name="boton" value="nuevoRegistro"/>
+        <input type="submit" name="boton" value="ConsultaRegistro"/>
+        </form>
     </div>
 </div>
 
