@@ -97,7 +97,7 @@
 </div>
 
 <div class="box">
-    <form method="post" action="ServletRegistro">
+    <form method="get" action="ServletHibernate">
         <input type="hidden" name="accion" value="grabar">
 
         <div class="campo">
@@ -165,7 +165,7 @@
             </select>
         </div>
 
-        <div class="acciones">
+        <div class="botones">
             <button type="submit" name="boton" value="guardarRegistro">Guardar trámite</button>
         </div>
     </form>

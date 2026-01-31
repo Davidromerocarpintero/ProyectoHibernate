@@ -101,7 +101,7 @@
 <div class="contenedor">
     <%
         Boolean encontrado = (Boolean) request.getAttribute("encontrado");
-        Registros registro = (Registros) request.getAttribute("registro");
+        Registro registro = (Registro) request.getAttribute("registro");
         String mensaje = (String) request.getAttribute("mensaje");
     %>
 
@@ -112,7 +112,7 @@
         <div class="ficha">
             <div class="fila">
                 <div class="etiqueta">Número de registro</div>
-                <div class="valor"><%= registro.getNumRegistro() %></div>
+                <div class="valor"><%= registro.getIdRegistro() %></div>
             </div>
             <div class="fila">
                 <div class="etiqueta">DNI solicitante</div>
@@ -132,17 +132,13 @@
             </div>
             <div class="fila">
                 <div class="etiqueta">Entidad</div>
-                <div class="valor"><%= registro.getEntidad().getNombreEntidad() %></div>
-            </div>
-            <div class="fila">
-                <div class="etiqueta">Fecha de registro</div>
-                <div class="valor"><%= registro.getFechaRegistro() %></div>
+                <div class="valor"><%= registro.getEntidad() %></div>
             </div>
         </div>
 
         <div class="acciones">
-            <a href="<%= request.getContextPath() %>/Registro.jsp">Nuevo registro</a>
-            <a href="<%= request.getContextPath() %>/Buscar.jsp">Otra consulta</a>
+            <button type="submit" name="boton" value="nuevoRegistro">Nuevo registro</button>
+        	<button type="submit" name="boton" value="Consultar">Consultar registro</button>
         </div>
 
     <% } else { %>
@@ -151,10 +147,12 @@
             <%= mensaje != null ? mensaje : "No se ha encontrado ningún registro con los datos indicados." %>
         </div>
 
-        <div class="acciones">
-            <a href="<%= request.getContextPath() %>/Registro.jsp">Nuevo registro</a>
-            <a href="<%= request.getContextPath() %>/Buscar.jsp">Volver a buscar</a>
+	<form action="ServletHibernate" method="get">
+        <div class="botones">
+            <button type="submit" name="boton" value="nuevoRegistro">Nuevo registro</button>
+        	<button type="submit" name="boton" value="Consultar">Consultar registro</button>
         </div>
+    </form>
 
     <% } %>
 </div>

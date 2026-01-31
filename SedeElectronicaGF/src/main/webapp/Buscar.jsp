@@ -100,7 +100,7 @@
 </div>
 
 <div class="panel">
-    <form method="get" action="ServletRegistro">
+    <form method="get" action="ServletHibernate">
         <input type="hidden" name="accion" value="buscar">
 
         <div class="campo">
@@ -114,17 +114,12 @@
                    placeholder="REG_000001">
         </div>
 
-        <div class="acciones">
-            <button type="submit">Consultar</button>
+        <div class="botones">
+            <button type="submit" name="boton" value="Buscar">Consultar</button>
+            <button type="submit" name="boton" value="nuevoRegistro">Volver</button>
         </div>
     </form>
-
-    <div class="volver">
-        <a href="<%= request.getContextPath() %>/Registro.jsp">
-            ← Volver al formulario principal
-        </a>
     </div>
-</div>
 
 </body>
 </html>

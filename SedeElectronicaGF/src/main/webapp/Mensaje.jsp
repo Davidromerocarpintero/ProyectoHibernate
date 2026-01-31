@@ -108,14 +108,12 @@
         </div>
     <% } %>
 
+	<form action="ServletHibernate" method="get">
     <div class="botones">
-        <a href="<%= request.getContextPath() %>/Registro.jsp">Nuevo registro</a>
-        <a href="<%= request.getContextPath() %>/Buscar.jsp">Consultar</a>
-        <form action='ServletHibernate' method="get">
-        <input type="submit" name="boton" value="nuevoRegistro"/>
-        <input type="submit" name="boton" value="ConsultaRegistro"/>
-        </form>
+        <button type="submit" name="boton" value="nuevoRegistro">Nuevo registro</button>
+        <button type="submit" name="boton" value="Consultar">Consultar registro</button>
     </div>
+    </form>
 </div>
 
 </body>
