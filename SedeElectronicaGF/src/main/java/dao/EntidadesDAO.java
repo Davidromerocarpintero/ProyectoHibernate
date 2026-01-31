@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import entities.Entidades;
 import entities.Registro;
 import jakarta.persistence.criteria.CriteriaQuery;
-import logic.HibernateUtils;
+import ln.HibernateUtils;
 
 public class EntidadesDAO {
 	
@@ -28,26 +28,20 @@ public class EntidadesDAO {
 		} 
 	}
 
-	public static Entidades selectNombre(Entidades e) throws Exception {
-
-		Transaction tr = null;
-		Entidades ent=null;
-		try (Session sesion = HibernateUtils.getSessionFactory().openSession();) {
-			tr = sesion.beginTransaction();
-			ent=sesion.get(Entidades.class,e.getNombre());
-			
-			
-			tr.commit();
-			
-		} catch (Exception ex) {
-			if (tr != null) {
-				tr.rollback();
-			}
-			ex.printStackTrace();
-		} finally {
-			return ent;
-		}
-
-
+	public static Entidades selectNombre(String nombre) throws Exception {
+	    Transaction tr = null;
+	    Entidades ent = null;
+	    try (Session sesion = HibernateUtils.getSessionFactory().openSession()) {
+	        tr = sesion.beginTransaction();
+	        ent = sesion.createQuery("FROM Entidades e WHERE e.nombre = :nombre", Entidades.class)
+	                    .setParameter("nombre", nombre)
+	                    .uniqueResult();
+	        tr.commit();
+	    } catch (Exception ex) {
+	        if (tr != null) tr.rollback();
+	        ex.printStackTrace();
+	    }
+	    return ent;
 	}
+
 }

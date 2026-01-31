@@ -2,6 +2,8 @@
 <%@ page import="dao.EntidadesDAO"%>
 <%@ page import="entities.Entidades"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.HashMap"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -87,6 +89,11 @@
             color: red;
             margin-top: 4px;
         }
+        .campo.error input,
+        .campo.error select {
+            border: 1px solid #c62828;
+            background-color: #ffebee;
+        }
     </style>
 </head>
 
@@ -97,10 +104,17 @@
 </div>
 
 <div class="box">
-    <form method="post" action="ServletRegistro">
+    <form method="post" action="ServletHibernate">
         <input type="hidden" name="accion" value="grabar">
 
-        <div class="campo">
+        <%
+            Map<String, String> errores = (Map<String, String>) request.getAttribute("errores");
+            Map<String, String> valores = (Map<String, String>) request.getAttribute("valores");
+            if (errores == null) errores = new HashMap<>();
+            if (valores == null) valores = new HashMap<>();
+        %>
+
+        <div class="campo <%= errores.containsKey("dni") ? "error" : "" %>">
             <label for="dni">DNI del solicitante <span class="obligatorio">*</span></label>
             <input type="text"
                    id="dni"
@@ -108,86 +122,87 @@
                    required
                    placeholder="00000000X"
                    pattern="[0-9]{8}[A-Za-z]"
-                   title="8 números y una letra">
-            <div class="mensaje-error" id="errorDni"></div>
+                   title="8 números y una letra"
+                   value="<%= valores.getOrDefault("dni", "") %>">
+            <% if (errores.containsKey("dni")) { %>
+                <div class="mensaje-error"><%= errores.get("dni") %></div>
+            <% } %>
         </div>
 
-        <div class="campo">
+        <div class="campo <%= errores.containsKey("nombre") ? "error" : "" %>">
             <label for="nombre">Nombre <span class="obligatorio">*</span></label>
             <input type="text"
                    id="nombre"
                    name="nombre"
                    required
                    maxlength="100"
-                   placeholder="Introduce el nombre">
+                   placeholder="Introduce el nombre"
+                   value="<%= valores.getOrDefault("nombre", "") %>">
+            <% if (errores.containsKey("nombre")) { %>
+                <div class="mensaje-error"><%= errores.get("nombre") %></div>
+            <% } %>
         </div>
 
-        <div class="campo">
+        <div class="campo <%= errores.containsKey("apellidos") ? "error" : "" %>">
             <label for="apellidos">Apellidos <span class="obligatorio">*</span></label>
             <input type="text"
                    id="apellidos"
                    name="apellidos"
                    required
                    maxlength="150"
-                   placeholder="Introduce los apellidos">
+                   placeholder="Introduce los apellidos"
+                   value="<%= valores.getOrDefault("apellidos", "") %>">
+            <% if (errores.containsKey("apellidos")) { %>
+                <div class="mensaje-error"><%= errores.get("apellidos") %></div>
+            <% } %>
         </div>
 
-        <div class="campo">
+        <div class="campo <%= errores.containsKey("tramite") ? "error" : "" %>">
             <label for="tramite">Trámite solicitado <span class="obligatorio">*</span></label>
             <input type="text"
                    id="tramite"
                    name="tramite"
                    required
                    maxlength="200"
-                   placeholder="Detalle del trámite">
+                   placeholder="Detalle del trámite"
+                   value="<%= valores.getOrDefault("tramite", "") %>">
+            <% if (errores.containsKey("tramite")) { %>
+                <div class="mensaje-error"><%= errores.get("tramite") %></div>
+            <% } %>
         </div>
 
-        <div class="campo">
-            <label for="idEntidad">Entidad responsable <span class="obligatorio">*</span></label>
-            <select id="idEntidad" name="idEntidad" required>
+        <div class="campo <%= errores.containsKey("entidad") ? "error" : "" %>">
+            <label for="entidad">Entidad responsable <span class="obligatorio">*</span></label>
+            <select id="entidad" name="entidad" required>
                 <option value="">Seleccione una opción</option>
-                <%/*
+                <%
                     try {
                         EntidadesDAO dao = new EntidadesDAO();
                         List<Entidades> lista = dao.getALL();
-
+                        String entidadSel = valores.getOrDefault("entidad", "");
                         for (Entidades e : lista) {
                 %>
-                    <option value="<%= e.getNombre() %>">
+                    <option value="<%= e.getNombre() %>" <%= e.getNombre().equals(entidadSel) ? "selected" : "" %>>
                         <%= e.getNombre() %>
                     </option>
                 <%
                         }
                     } catch (Exception ex) {
                         out.println("<option>Error al cargar entidades</option>");
+                        ex.printStackTrace();
                     }
-                */%>
+                %>
             </select>
+            <% if (errores.containsKey("entidad")) { %>
+                <div class="mensaje-error"><%= errores.get("entidad") %></div>
+            <% } %>
         </div>
 
         <div class="acciones">
-            <button type="submit" name="boton" value="guardarRegistro">Guardar trámite</button>
+            <button type="submit" name="boton" value="guardarRegistro">Guardar registro</button>
         </div>
     </form>
 </div>
-
-<script>
-    const dniInput = document.getElementById("dni");
-    const error = document.getElementById("errorDni");
-    const regexDni = /^[0-9]{8}[A-Z]$/;
-
-    dniInput.addEventListener("input", () => {
-        dniInput.value = dniInput.value.toUpperCase();
-    });
-
-    dniInput.addEventListener("blur", () => {
-        if (dniInput.value !== "" && !regexDni.test(dniInput.value)) {
-            error.textContent = "El DNI debe tener 8 números y una letra.";
-        } else {
-            error.textContent = "";
-        }
-    });
-</script>
 
 </body>
 </html>
