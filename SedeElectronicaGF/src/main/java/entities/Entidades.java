@@ -22,5 +22,8 @@ public class Entidades implements java.io.Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public String getIdEntidad() {
+		return this.getIdEntidad();
+	}
 
 }
