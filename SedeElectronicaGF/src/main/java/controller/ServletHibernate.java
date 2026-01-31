@@ -16,92 +16,104 @@ import logic.RegistroLN;
 
 @WebServlet("/ServletHibernate")
 public class ServletHibernate extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ServletHibernate() {
-        super();
-    }
+	public ServletHibernate() {
+		super();
+	}
 
-    private EntidadesDAO entidadesDAO;
-    private RegistroDAO registroDAO;
+	private EntidadesDAO entidadesDAO;
+	private RegistroDAO registroDAO;
 
-    @Override
-    public void init() throws ServletException {
-        entidadesDAO = new EntidadesDAO();
-        registroDAO = new RegistroDAO();
-    }
+	@Override
+	public void init() throws ServletException {
+		entidadesDAO = new EntidadesDAO();
+		registroDAO = new RegistroDAO();
+	}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String boton = request.getParameter("boton");
-        String page = "";
+		String boton = request.getParameter("boton");
+		String page = "";
 
-        switch (boton) {
+		switch (boton) {
 
-        case "Nuevo Registro":
-            page = "Registro.jsp";
-            break;
+		case "Nuevo Registro":
+			page = "Registro.jsp";
+			break;
 
-        case "Consulta Registro":
-            page = "Buscar.jsp";
-            break;
+		case "Consulta Registro":
+			page = "Buscar.jsp";
+			break;
 
-        case "Buscar":
-            try {
-                int numRegistro = Integer.parseInt(request.getParameter("numRegistro"));
-                Registro r = registroDAO.buscarPorNumero(numRegistro);
+		case "Buscar":
+			try {
+				int idRegistro = Integer.parseInt(request.getParameter("idRegistro"));
 
-                if (r != null) {
-                    request.setAttribute("registro", r);
-                } else {
-                    request.setAttribute("mensaje", "El registro no existe");
-                }
-                page = "Consultar.jsp";
+				Registro r = new Registro();
+				r.setIdRegistro(idRegistro);
 
-            } catch (Exception e) {
-                request.setAttribute("mensaje", "Error en la búsqueda");
-                page = "Mensaje.jsp";
-            }
-            break;
-        }
+				Registro resultado = RegistroDAO.selectId(r);
 
-        request.getRequestDispatcher(page).forward(request, response);
-    }
+				if (resultado != null) {
+					request.setAttribute("registro", resultado);
+				} else {
+					request.setAttribute("mensaje", "El registro no existe");
+				}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+				page = "Consultar.jsp";
 
-        String boton = request.getParameter("boton");
-        String mensaje = "";
-        boolean error = false;
+			} catch (Exception e) {
+				request.setAttribute("mensaje", "Error al realizar la búsqueda");
+				page = "Mensaje.jsp";
+			}
+			break;
+		}
 
-        try {
-            if ("Guardar".equals(boton)) {
+		request.getRequestDispatcher(page).forward(request, response);
+	}
 
-                Registro r = new Registro();
-                r.setSolicitante(request.getParameter("solicitante"));
-                r.setAsunto(request.getParameter("asunto"));
-                r.setDescripcion(request.getParameter("descripcion"));
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 
-                int idEntidad = Integer.parseInt(request.getParameter("entidad"));
-                Entidades e = entidadesDAO.buscarPorId(idEntidad);
-                r.setEntidad(e);
+	    String boton = request.getParameter("boton");
+	    String mensaje = "";
+	    boolean error = false;
 
-                mensaje = RegistroLN.alta(r);
-            }
+	    try {
+	        if ("Guardar".equals(boton)) {
 
-        } catch (Exception ex) {
-            error = true;
-            ex.printStackTrace();
-        } finally {
-            if (error) {
-                mensaje = "Error al guardar el registro";
-            }
-            request.setAttribute("mensaje", mensaje);
-            request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
-        }
-    }
+	            Registro r = new Registro();
+	            r.setDniSolicitante(request.getParameter("dni"));
+	            r.setNombreSolicitante(request.getParameter("nombre"));
+	            r.setApellidosSolicitante(request.getParameter("apellidos"));
+	            r.setTramite(request.getParameter("tramite"));
+
+	            String nombreEntidad = request.getParameter("entidad");
+
+	            Entidades e = EntidadesDAO.selectNombre(new Entidades(nombreEntidad));
+
+	            if (e != null) {
+	                r.setEntidad(nombreEntidad);
+	                mensaje = RegistroLN.alta(r);
+	            } else {
+	                mensaje = "La entidad especificada no existe";
+	            }
+	        }
+
+	    } catch (Exception ex) {
+	        error = true;
+	        ex.printStackTrace();
+	    } finally {
+	        if (error) {
+	            mensaje = "Error al guardar el registro";
+	        }
+	        request.setAttribute("mensaje", mensaje);
+	        request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+	    }
+	}
+
 }
