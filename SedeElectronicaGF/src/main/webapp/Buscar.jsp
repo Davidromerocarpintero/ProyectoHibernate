@@ -104,14 +104,13 @@
         <input type="hidden" name="accion" value="buscar">
 
         <div class="campo">
-            <label for="numRegistro">
+            <label for="idRegistro">
                 Código de registro <span class="obligatorio">*</span>
             </label>
             <input type="text"
-                   id="numRegistro"
-                   name="numRegistro"
-                   required
-                   placeholder="REG_000001">
+       id="idRegistro"
+       name="idRegistro"
+       placeholder="REG_XXYY123X">
         </div>
 
         <div class="botones">

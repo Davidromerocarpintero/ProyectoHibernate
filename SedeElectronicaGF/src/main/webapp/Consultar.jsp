@@ -112,7 +112,7 @@
         <div class="ficha">
             <div class="fila">
                 <div class="etiqueta">Número de registro</div>
-                <div class="valor"><%= registro.getIdRegistro() %></div>
+               <div class="valor"><%= registro.getIdRegistro() != null ? registro.getIdRegistro() : "—" %></div>
             </div>
             <div class="fila">
                 <div class="etiqueta">DNI solicitante</div>
@@ -136,10 +136,12 @@
             </div>
         </div>
 
+	<form action="ServletHibernate" method="get">
         <div class="acciones">
             <button type="submit" name="boton" value="nuevoRegistro">Nuevo registro</button>
         	<button type="submit" name="boton" value="Consultar">Consultar registro</button>
         </div>
+    </form>
 
     <% } else { %>
 

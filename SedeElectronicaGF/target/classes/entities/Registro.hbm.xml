@@ -1,25 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 22 ene 2026, 13:21:33 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="sede" name="entities.Registro" optimistic-lock="none" table="registro">
-        <id name="idRegistro" type="int">
-            <column name="idRegistro"/>
-            <generator class="assigned"/>
+    <class catalog="sede" name="entities.Registro" table="registro">
+        
+        <id name="idRegistro" column="idRegistro" type="string" length="20" not-null="true">
+            <generator class="assigned" />
         </id>
-        <property name="dniSolicitante" type="string">
-            <column length="65535" name="dniSolicitante" not-null="true"/>
-        </property>
-        <property name="nombreSolicitante" type="string">
-            <column length="65535" name="nombreSolicitante" not-null="true"/>
-        </property>
-        <property name="apellidosSolicitante" type="string">
-            <column length="65535" name="apellidosSolicitante" not-null="true"/>
-        </property>
-        <property name="tramite" type="string">
-            <column length="65535" name="tramite" not-null="true"/>
-        </property>
-        <property name="entidad" type="string">
-            <column length="65535" name="entidad" not-null="true"/>
-        </property>
+        <property name="dniSolicitante" type="string" not-null="true"/>
+        <property name="nombreSolicitante" type="string" not-null="true"/>
+        <property name="apellidosSolicitante" type="string" not-null="true"/>
+        <property name="tramite" type="string" not-null="true"/>
+        <property name="entidad" type="string" not-null="true"/>
+        
     </class>
 </hibernate-mapping>

@@ -1,16 +1,5 @@
-<<<<<<< HEAD
-/servlet/
-/dao/
-=======
-/dao/
-<<<<<<< HEAD
-/entities/
-=======
->>>>>>> origin/david
-/entities/
->>>>>>> origin/david
-/logic/
 /controller/
->>>>>>> origin/david
-/servlet/
+/dao/
+/entities/
 /ln/
+/servlet/

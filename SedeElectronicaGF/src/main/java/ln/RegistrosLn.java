@@ -1,97 +1,35 @@
 package ln;
 
-
 import dao.RegistroDAO;
-import entities.Entidades;
 import entities.Registro;
-
-import java.util.regex.Pattern;
 
 public class RegistrosLn {
 
-    private RegistroDAO registroDAO;
+	public static String alta(Registro r) {
+	    try {
+	        String dni = r.getDniSolicitante();
+	        if (dni == null || dni.length() < 9) {
+	            throw new Exception("DNI inválido para generar número de registro");
+	        }
+	        String ultimos3Dni = dni.substring(dni.length() - 3).toUpperCase(); // 2 números + letra
 
-    private static final Pattern DNI_PATTERN = Pattern.compile("^[0-9]{8}[A-Za-z]$");
+	        String nom2 = (r.getNombreSolicitante() != null && !r.getNombreSolicitante().trim().isEmpty())
+	                ? r.getNombreSolicitante().trim().substring(0, 2).toUpperCase()
+	                : "XX";
 
-    public RegistrosLn() {
-        this.registroDAO = new RegistroDAO();
-    }
+	        String ape2 = (r.getApellidosSolicitante() != null && !r.getApellidosSolicitante().trim().isEmpty())
+	                ? r.getApellidosSolicitante().trim().substring(0, 2).toUpperCase()
+	                : "XX";
 
-    public boolean validarDatos(String dni, String nombre, String apellidos, String tramite, int idEntidad) {
-        if (dni == null || dni.trim().isEmpty()) {
-            System.out.println("Validación fallida: DNI vacío");
-            return false;
-        }
+	        String IdRegistro = "REG_" + nom2 + ape2 + ultimos3Dni;
 
-        if (nombre == null || nombre.trim().isEmpty()) {
-            System.out.println("Validación fallida: Nombre vacío");
-            return false;
-        }
+	        r.setIdRegistro(IdRegistro);
 
-        if (apellidos == null || apellidos.trim().isEmpty()) {
-            System.out.println("Validación fallida: Apellidos vacíos");
-            return false;
-        }
-
-        if (tramite == null || tramite.trim().isEmpty()) {
-            System.out.println("Validación fallida: Trámite vacío");
-            return false;
-        }
-
-        if (idEntidad <= 0) {
-            System.out.println("Validación fallida: ID de entidad inválido");
-            return false;
-        }
-
-        if (!DNI_PATTERN.matcher(dni.trim().toUpperCase()).matches()) {
-            System.out.println("Validación fallida: Formato de DNI incorrecto");
-            return false;
-        }
-
-        if (nombre.length() > 100) {
-            System.out.println("Validación fallida: Nombre demasiado largo");
-            return false;
-        }
-
-        if (apellidos.length() > 150) {
-            System.out.println("Validación fallida: Apellidos demasiado largos");
-            return false;
-        }
-
-        if (tramite.length() > 200) {
-            System.out.println("Validación fallida: Trámite demasiado largo");
-            return false;
-        }
-
-        System.out.println("Validación exitosa");
-        return true;
-    }
-    
-
-    public String generarNumeroRegistro() {
-        long contador = registroDAO.obtenerContador();
-        contador++;
-
-        String numRegistro = String.format("REG_%06d", contador);
-
-        System.out.println("Número de registro generado: " + numRegistro);
-        return numRegistro;
-    }
-
-    public String procesarRegistro(Registro registro) {
-        String numRegistro = generarNumeroRegistro();
-        registro.setIdRegistro(numRegistro);
-
-        String resultado = registroDAO.guardarRegistro(registro);
-
-        System.out.println("Registro procesado: " + resultado);
-        return resultado;
-    }
-
-    public boolean validarFormatoDNI(String dni) {
-        if (dni == null || dni.trim().isEmpty()) {
-            return false;
-        }
-        return DNI_PATTERN.matcher(dni.trim().toUpperCase()).matches();
-    }
+	        RegistroDAO.insert(r);
+	        return "Registro dado de alta correctamente. Nº: " + IdRegistro;
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return "Error al dar de alta el registro: " + ex.getMessage();
+	    }
+	}
 }
